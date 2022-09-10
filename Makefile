@@ -38,7 +38,7 @@ misc/makefile_helpers/num_niche_overlap_xx.makedat	:
 # ----------- fit model -----------------------
 ##
 ## ------ Fit model ------
-## Fit and project current models. Seems to work.
+## Fit and project current models. 
 # Fit biomod models. Solve for .tif and .gpkg files
 ## fit_model : Fit biomod model. Argument $runtype can be `slurm`. Pass argument taxon eg: make fit_model taxon=points_atra Options: points_all, points_atra, points_prenjensis
 # depends file num_PP_projections_XX.makedat is made by helpers_makefile.R
@@ -84,22 +84,15 @@ misc/makefile_helpers/num_future_projections_45.makedat	:
 binary_projections : misc/makefile_helpers/num_binary_projections_28.makedat 
 
 # depends script depends on helpers_makefile.R
-# 28 is testing number TODO change number
+
 misc/makefile_helpers/num_binary_projections_192.makedat	:	
 	Rscript R/analyze_output/load_biomod_projections.R
 
-## ------ Bivariate maps ------
-# Check files
-## bivariate_maps : Make bivariate maps
-
-.PHONY : bivariate_maps
-bivariate_maps :  
-	bash bash/run_make_bivariate_map.sh
 
 # ----------- Cleaning and deleting stuff ---------------------- 
 ##
 ## ------ Cleaning stuff ------
-## !Add stuff
+
 # ----------- Delete presences ---------------------- 
 # Delete model stuff
 ## new_projections_current : Remove models
