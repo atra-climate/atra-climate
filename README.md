@@ -3,6 +3,11 @@
 
 ## Running the code
 
+
+``` r
+make help
+```
+
 ``` r
 make fit_model runtype=slurm taxon=points_atra
 ```
