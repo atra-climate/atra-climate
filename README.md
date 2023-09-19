@@ -1,21 +1,4 @@
 
-# *Salamandra atra* climate impact modeling
+# A multi-modeling approach for the conservation of a cold-adapted amphibian in the face of climate change
 
-## Running the code
-
-
-``` r
-make help
-```
-
-``` r
-make fit_model runtype=slurm taxon=points_atra
-```
-
-``` r
-make project_future runtype=slurm taxon=points_atra
-```
-
-``` r
-make binary_projections
-```
+## Code repository
