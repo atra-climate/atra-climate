@@ -1,7 +1,7 @@
 ##########################################
 ####  Main setup
 ##########################################
-#### | Project name: Atra climate model
+#### | Project name: Atra climate
 #### | Script type: Setup
 #### | What it does: Creates setup for the project
 ##########################################
@@ -40,7 +40,6 @@ if (length(my_args$taxon) > 0)
 suppressPackageStartupMessages(library(here))
 suppressPackageStartupMessages(library(tidyverse))
 suppressPackageStartupMessages(library(raster))
-# todor::todor_project_addin()
 
 source(here("R", "functions", "rarify_points.R"))
 # Set variables -----------------------------------------------------------
@@ -62,9 +61,7 @@ vif_th <- 2
 #### Re-run this script in case variables need to be updated
 # here("R", "data_processing", "climate_data_VIF.R")
 
-var_variables_vif = c()
-
-
+var_variables_vif = c(4, 6, 7, 13, 15)
 
 var_path_maxent = here("maxent.jar")
 var_model_algorithms = c("GLM", "GBM", "GAM",
@@ -88,12 +85,10 @@ folder_path_bash <- here("bash")
 folder_path_misc <- here("misc")
 folder_path_helpers_make <- here("misc", "makefile_helpers")
 
-#
 folder_path_data_misc <- here("data", "misc")
 folder_path_data_raster <- here("data", "raster")
 folder_path_data_raw <- here("data", "raw")
 folder_path_data_species <- here("data", "species_data")
-#
 
 # Climate data path
 
@@ -102,9 +97,7 @@ folder_path_runs <- here("runs")
   
 
 folder_path_dataviz <- str_glue("{folder_path_runs}/{var_run_name}/dataviz")
-
 folder_path_data_raster_quarters <- str_glue("{folder_path_data_raster}/biomod_quarters")
-
 folder_path_data_raster <- here("data", "raster")
 
 
@@ -150,8 +143,6 @@ dir.create(folder_path_code_model, recursive = TRUE, showWarnings = FALSE)
 
 
 #### Set model folder paths ####
-
-
 
 ## Set folder where output is stored 
 # It uses var_run_name from above
@@ -201,14 +192,8 @@ dir.create(folder_path_projections_manual_ensembles, recursive = TRUE, showWarni
 var_biomod_wd <- str_glue("{folder_path_runs}/biomod_output")
 
 dir.create(var_biomod_wd, showWarnings = FALSE, recursive = TRUE)
-# NOTE This is an issue! This needs to be moved to single modeling script since it needs to be contained.
-# It changes environment status.
-# 
-
-
 
 # Climate data ------------------------------------------------------------
-
 
 var_current_climate_df = folder_path_data_climate %>% 
   list.files(recursive = TRUE) %>% 
@@ -235,9 +220,7 @@ if (var_test_run == TRUE)
   var_current_rasterstack <- aggregate(var_current_rasterstack, fact = 5)
 }
 
-
 #
-
 
 # Deleting files ----------------------------------------------------------
 

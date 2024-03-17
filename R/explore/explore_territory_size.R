@@ -1,7 +1,3 @@
-# Explore some data on territory sizes
-
-
-
 pacman::p_load(Rahat, tidyverse, here, tictoc, janitor, sf, raster, matrixStats)
 
 library(ggthemes)
@@ -9,8 +5,6 @@ library(viridis)
 library(ggnewscale)
 library(patchwork)
 library(ggtext)
-
-
 
 # Load setup script. Fork is for type of computer, in case here::here() cannot
 # find the path on the local folder. This is the case on the computing cluster,
@@ -81,8 +75,6 @@ df_area_files %>%
     panel.border = element_rect(fill = NA, color = "grey70"),
     panel.grid.major.x = element_blank()
   )
-
-
 
 ########
 utm_33n <- "+proj=utm +zone=33 +ellps=WGS84 +datum=WGS84 +units=m +no_defs"
@@ -217,9 +209,6 @@ r_dinarides <- mask(r_ensembles_stack, range_dinarides_wgs)
 r_alps <- mask(r_ensembles_stack, range_alps_wgs)
 
 r_combined <- mask(r_ensembles_stack, range_combined)
-
-
-
 
 # Calculate territory as dataframe ----------------------------------------
 

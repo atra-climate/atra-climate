@@ -1,7 +1,7 @@
 ##########################################
 ####  Functions for modelling
 ##########################################
-#### | Project name: My research project
+#### | Project name: Atra climate
 #### | Script type: Data processing
 #### | What it does: Description
 
@@ -14,12 +14,6 @@
 #### 2: fit_models()
 #### 3: project_models()
 #### 4: ensemble_projections()
-
-
-
-
-
-
 
 
 project_single_models <- function(caret_model_list, raster_to_predict)
@@ -102,9 +96,6 @@ project_single_models <- function(caret_model_list, raster_to_predict)
 #'
 #' @examples
 #' 
-
-
-
 clean_model_evaluations <- function(x, ensemble = FALSE)
 {
   
@@ -134,7 +125,6 @@ clean_model_evaluations <- function(x, ensemble = FALSE)
   tss_evals <- x["TSS","Testing.data",,,] %>% 
     as.data.frame() %>% 
     rownames_to_column("algorithm") %>% 
-    # pivot_longer(RUN1:ncol(.)) %>% 
     pivot_longer(2:ncol(.)) %>% 
     transmute(
       algorithm,
@@ -145,7 +135,6 @@ clean_model_evaluations <- function(x, ensemble = FALSE)
   auc_evals <- x["ROC","Testing.data",,,] %>% 
     as.data.frame() %>% 
     rownames_to_column("algorithm") %>% 
-    # pivot_longer(RUN1:ncol(.)) %>% 
     pivot_longer(2:ncol(.)) %>% 
     transmute(
       algorithm,

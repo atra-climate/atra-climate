@@ -1,7 +1,7 @@
 #########################################!#
 ####  Make ensemble models from individual binary projections
 #########################################!#
-#### | Project name: Atra climate modeling
+#### | Project name: Atra climate
 #### | Script type: Data processing
 #### | What it does: Description
 #### | Date created: Mart 30, 2022.
@@ -100,8 +100,7 @@ for (my_species in c("points_all", "points_atra", "points_prenjensis"))
       stack()
     
     bin_raster_outname <- str_glue("{folder_path_projections_manual_ensembles}ensemble_future_{my_species}_{my_scenario}.tif")
-    # bin_raster_outname <- here("test", str_glue("consensus_noensemble_future_{my_species}_{my_scenario}.tif"))
-    
+
     ####
     if (!file.exists(bin_raster_outname))
     {

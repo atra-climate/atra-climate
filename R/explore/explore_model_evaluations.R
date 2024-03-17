@@ -1,7 +1,7 @@
 ##########################################
 ####  Read model evaluations
 ##########################################
-#### | Project name: Atra model
+#### | Project name: Atra climate
 #### | Script type: Data processing
 #### | What it does: Description
 ##########################################
@@ -42,25 +42,14 @@ my_files %>%
   labs(title = "TSS of fitted ensemble models - test run") +
   theme_minimal()
     
-#### How many files?
-## For past
-# 7 scenarios, times 3 taxa, times n models + ensemble
-# 7 * 3 * 4
+
 folder_path_projections_past %>%
     list.files(full.names = TRUE, recursive = TRUE)
 
 folder_path_projections_future %>%
   list.files(full.names = TRUE, recursive = TRUE)
 
-# 
-# folder_path_projections_past %>%
-#   list.files(full.names = TRUE, recursive = TRUE) %>%
-#   file.remove()
-
-
 # Variable importances ----------------------------------------------------
-
-
 
 evals_variable_importance <- folder_path_assessment %>% 
   list.files(recursive = TRUE, full.names = TRUE) %>% 

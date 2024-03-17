@@ -1,7 +1,7 @@
 ##########################################
 ####  Makefile helper scripts
 ##########################################
-#### | Project name: Atra model
+#### | Project name: Atra climate
 #### | Script type: Data processing
 #### | What it does: Runs data checks to create files used as dependencies and targets in make
 ##########################################
@@ -31,23 +31,6 @@ num_projections_number_current <- stringr::str_glue("{folder_path_helpers_make}/
 file.create(num_projections_number_current)
 
 message(stringr::str_glue("There are {current_projections_number} current projections"))
-
-#### Past ####
-
-past_projections_number <- folder_path_projections_past %>% 
-  list.files() %>% 
-  length()
-
-folder_path_helpers_make %>% 
-  list.files(full.names = TRUE, pattern = "num_past_projections_") %>% 
-  file.remove()
-
-num_projections_number_past <- stringr::str_glue("{folder_path_helpers_make}/num_past_projections_{past_projections_number}.makedat")
-
-file.create(num_projections_number_past)
-
-message(stringr::str_glue("There are {past_projections_number} past projections"))
-
 
 #### Future ####
 

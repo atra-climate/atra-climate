@@ -1,7 +1,7 @@
 ##########################################
 ####  Calculate niche overlap - non spatial
 ##########################################
-#### | Project name: Atra modeling
+#### | Project name: Atra climate
 #### | Script type: Data processing
 #### | What it does: Description
 ##########################################
@@ -48,7 +48,7 @@ source(here("R", "functions", "model_functions.R"))
 
 ####
 # 10 is for testing purpose; use 100 000
-number_of_samples = 100
+number_of_samples = 100000
 
 string_species_groupA = "random_set1"
 string_species_groupB = "random_set2"
@@ -78,7 +78,7 @@ current_climate_vars_df <- folder_path_data_climate %>%
     full_path = str_glue("{folder_path_data_climate}/{period}/{V2}")
   )
 
-selected_vars <- c(3, 5, 6, 8, 9, 13, 14, 15)
+selected_vars <- var_variables_vif
 
 climate_current_vif <- current_climate_vars_df %>% 
   slice(selected_vars) %>%

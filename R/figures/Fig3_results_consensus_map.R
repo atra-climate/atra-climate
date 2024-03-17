@@ -1,4 +1,4 @@
-# Figure 2 – map with model consensus (previously Figure 1),
+# Figure 3 – map with model consensus 
 # with all 3 study units, species-level in the bottom row
 
 
@@ -10,6 +10,7 @@ library(ggnewscale)
 library(patchwork)
 library(cowplot)
 library(ggtext)
+library(ggspatial)
 
 # Load setup script. Fork is for type of computer, in case here::here() cannot
 # find the path on the local folder. This is the case on the computing cluster,
@@ -19,7 +20,7 @@ library(ggtext)
 source(here::here("R", "main_setup.R"))
 
 
-source(here("R", "functions", "bivariate_map_functions.R"))
+source(here("R", "functions", "map_functions.R"))
 ####
 
 # Should raster be masked to alpine ranges
@@ -39,13 +40,9 @@ utm_33n <- "+proj=utm +zone=33 +ellps=WGS84 +datum=WGS84 +units=m +no_defs"
 
 # Load data ---------------------------------------------------------------
 
-# Load DEM
-
-
 DEM_large <- here::here("results", "DEM_aggregated.tif") %>% 
   raster()
 # Make map ----------------------------------------------------------------
-
 
 #### Load species data
 atra_raw_sf <- st_read(var_path_species_data)
@@ -82,10 +79,7 @@ alpine_ranges <- rbind(range_alps, range_dinarides)
 ####
 dem_gg2 <- DEM_large %>%
   projectRaster(crs = utm_33n) %>%
-  # aggregate(fact = 5) %>%
   raster_to_gg()
-
-
 
 ###########################3
 # Load commitee averages and continous projections
@@ -152,9 +146,6 @@ convert_for_plot <- function(x, name = "", mask = FALSE)
   return(x)
   
 }
-# r_ensembles_stack %>% 
-# names()
-
 
 #### Make map stacks
 tic("stacking maps")
@@ -184,30 +175,20 @@ make_ensemble_map <- function(data)
       data = data,
       aes(x = x, y = y, fill = value),
       show.legend = TRUE) +
-    # alpha = prx),
-    # show.legend = FALSE) +
-    # geom_tile(data = data, aes(x = x, y = y, fill = atan(hry/prx)), show.legend = FALSE) +
-    # scale_fill_distiller(type = "seq", palette = "BuGn", direction = 1, limits = c(0, 1)) +
-    # scale_fill_distiller(type = "div", palette = "PRGn", direction = 1, limits = c(0, 1)) +
+   
     scale_fill_gradient2(
-      low = "#999999",
-      mid = "#ffffbf",
-      high = "#1a9850",
+     
+      low = "#f7fcb9",
+      mid = "#addd8e",
+      high = "#31a354",
       midpoint = 0.5,
       limits = c(0, 1)
     ) + 
-    # scale_fill_viridis() +
     geom_sf(data = dinaric_countries, fill = NA, color = "grey60", size = 0.5) +
-    # geom_sf(data = alpine_ranges, fill = NA, color = "grey70", linetype = "dashed", size = 0.75) +
-    # geom_sf(data = division_line, linetype = "dashed", size = 0.7, color = "grey30") +
-    # scale_fill_gradient(low = "grey50", high = "grey") +
-    # scale_fill_manual(values = c("grey50", "grey")) +
-    # scale_fill_manual(values = c("#984ea3", "#EFC000FF")) +
-    # theme_ipsum_rc() +
-    # theme_map() +
-    # guides(fill = guide_legend(override.aes = list(size = 5))) +
+    
     theme(
       plot.tag = element_text(size = 22),
+      plot.title = element_text(size = 14.5),
       legend.position = "none",
       legend.text = element_text(size = 20, family = "Helvetica", color = "grey10"),
       # legend.title = element_blank(),
@@ -223,12 +204,7 @@ make_ensemble_map <- function(data)
       panel.grid.major = element_line(colour = "grey60", linetype = "dotted", size = 0.75),
       panel.background = element_rect(fill = "transparent")
     )
-  # annotation_scale(text_cex = 1.5, location = "br",
-  #                  style = "ticks",
-  #                  height = unit(0.3, "cm"),
-  #                  pad_x = unit(0.5, "cm"),
-  #                  pad_y = unit(0.3, "cm"),
-  #                  line_width = 2) +
+
   
   return(p_mapp)
 }
@@ -239,22 +215,24 @@ make_ensemble_map <- function(data)
 my_map_northcurrent <- my_map_data_northcurrent %>% 
   filter(value != 0) %>% 
   make_ensemble_map() +
-  labs(title = "a) Subspecies model *atra* -  current period") +
+  labs(title = "a) *Salamandra atra atra* -  current climate") +
   theme(plot.margin = unit(c(0, 0.25, 0, 0.25), "cm"),
         plot.title = element_markdown()
-        ) +
+  ) +
   coord_sf(
     label_graticule = "NW",
     xlim = c(st_bbox(atra_thinned_sf)[1] * 1.2,
              st_bbox(atra_thinned_sf)[3] * 1.1),
     ylim = c(st_bbox(atra_thinned_sf)[2] / 1.02,
-             st_bbox(atra_thinned_sf)[4] * 1.015))
+             st_bbox(atra_thinned_sf)[4] * 1.015))  +
+  annotation_north_arrow(which_north = "true", style = north_arrow_minimal(fill = "grey40", line_col = "grey40"), location = "tl", pad_x = unit(0.1, "cm"))
+
 
 
 my_map_north26 <- my_map_data_north26 %>% 
   filter(value != 0) %>% 
   make_ensemble_map() +
-  labs(title = "b) Subspecies model *atra* - RCP2.6") +
+  labs(title = "b) *Salamandra atra atra* - RCP2.6") +
   theme(plot.margin = unit(c(0, 0.25, 0, 0.25), "cm"),
         plot.title = element_markdown()
   ) +
@@ -269,7 +247,7 @@ my_map_north26 <- my_map_data_north26 %>%
 my_map_north85 <- my_map_data_north85 %>% 
   filter(value != 0) %>% 
   make_ensemble_map()  +
-  labs(title = "c) Subspecies model *atra* - RCP8.5") +
+  labs(title = "c) *Salamandra atra atra* - RCP8.5") +
   theme(plot.margin = unit(c(0, 0.25, 0, 0.25), "cm"),
         plot.title = element_markdown()
   ) +
@@ -286,7 +264,7 @@ my_map_north85 <- my_map_data_north85 %>%
 my_map_southcurrent <- my_map_data_southcurrent %>% 
   filter(value != 0) %>% 
   make_ensemble_map() +
-  labs(title = "d) Subspecies model *prenjensis* - current period") +
+  labs(title = "d) *Salamandra atra prenjensis* - current climate") +
   theme(plot.margin = unit(c(0, 0.25, 0, 0.25), "cm"),
         plot.title = element_markdown()
   ) +
@@ -301,7 +279,7 @@ my_map_southcurrent <- my_map_data_southcurrent %>%
 my_map_south26 <- my_map_data_south26 %>% 
   filter(value != 0) %>% 
   make_ensemble_map()  +
-  labs(title = "e) Subspecies model *prenjensis* - RCP2.6") +
+  labs(title = "e) *Salamandra atra prenjensis* - RCP2.6") +
   theme(plot.margin = unit(c(0, 0.25, 0, 0.25), "cm"),
         plot.title = element_markdown()
   ) +
@@ -315,7 +293,7 @@ my_map_south26 <- my_map_data_south26 %>%
 my_map_south85 <- my_map_data_south85 %>% 
   filter(value != 0) %>% 
   make_ensemble_map() +
-  labs(title = "f) Subspecies model *prenjensis* - RCP8.5") +
+  labs(title = "f) *Salamandra atra prenjensis* - RCP8.5") +
   theme(plot.margin = unit(c(0, 0.25, 0, 0.25), "cm"),
         plot.title = element_markdown()
   ) +
@@ -332,7 +310,7 @@ my_map_south85 <- my_map_data_south85 %>%
 my_map_spcurrent <- my_map_data_spcurrent %>% 
   filter(value != 0) %>% 
   make_ensemble_map() +
-  labs(title = "g) Species model - current period") +
+  labs(title = "g) Species model - current climate") +
   theme(plot.margin = unit(c(0, 0.25, 0, 0.25), "cm"),
         plot.title = element_markdown()
   ) +
@@ -371,7 +349,16 @@ my_map_sp85 <- my_map_data_sp85 %>%
     xlim = c(st_bbox(atra_thinned_sf)[1] * 1.2,
              st_bbox(atra_thinned_sf)[3] * 1.1),
     ylim = c(st_bbox(atra_thinned_sf)[2] / 1.02,
-             st_bbox(atra_thinned_sf)[4] * 1.015))
+             st_bbox(atra_thinned_sf)[4] * 1.015))  +
+  annotation_scale(text_cex = 1.25, 
+                   text_col = "grey40",
+                   line_col = "grey40",
+                   location = "br",
+                   style = "ticks",
+                   height = unit(0.3, "cm"),
+                   pad_x = unit(0.5, "cm"),
+                   pad_y = unit(0.3, "cm"),
+                   line_width = 1.5)
 
 ##################################################
 ##################################################
@@ -379,28 +366,19 @@ my_map_sp85 <- my_map_data_sp85 %>%
 
 
 my_plot_legend <- my_map_spcurrent +
-  # scale_fill_distiller(
-  #   type = "div", palette = "PRGn", direction = 1, limits = c(0, 1),
-  #     
-  #   
-  #   # type = "seq", palette = "BuGn", direction = 1, limits = c(0, 1),
-  #                      labels = c(0, 0.25, 0.5, 0.75, 1)
-  #                      ) +
   guides(
     limits = c(0, 1),
     fill = guide_colorbar(
       frame.colour = "black",
       ticks.colour = "grey30",
       barwidth = grid::unit(1000, "pt"),
-      barheight = grid::unit(20, "pt"),
-      # title = "Model consensus",
-      # title.position = "top",
-      ticks.linewidth = 3,
+      barheight = grid::unit(17.5, "pt"),
+      ticks.linewidth = 1,
       label.theme = element_text(
-        size = 24,
+        size = 16,
         hjust = 0.5,
         vjust = 0.5,
-        color = "grey20",
+        color = "grey30",
         family = "Helvetica"
       )
     )
@@ -416,6 +394,7 @@ my_plot_legend <- my_map_spcurrent +
 
 my_legend <- cowplot::get_legend(my_plot_legend)
 # ggdraw(my_legend)
+
 my_agg_map_new <-   (my_map_northcurrent | my_map_north26 | my_map_north85) /
   (my_map_southcurrent | my_map_south26 | my_map_south85) /
   (my_map_spcurrent | my_map_sp26 | my_map_sp85)  +
@@ -434,5 +413,5 @@ fig2_map_outname <- str_glue("{folder_path_figures}/Fig2_results_consensus_map{m
 ## Final file version for submission stored in 600 dpi's
 tic()
 ggsave(fig2_map_outname, my_agg_map_new,
-       dpi = 300, height = 14, width = 16)  
+       dpi = 600, height = 14, width = 16)  
 toc()

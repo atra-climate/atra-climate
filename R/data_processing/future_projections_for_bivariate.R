@@ -1,7 +1,7 @@
 ##########################################
 ####  Make data for bivariate projections
 ##########################################
-#### | Project name: My research project
+#### | Project name: Atra climate
 #### | Script type: Data processing
 #### | What it does: Description
 #### | Date created: juni 20, 2021.
@@ -64,7 +64,6 @@ for (my_species in c("points_all", "points_atra", "points_prenjensis"))
      list.files(full.names = TRUE) %>% 
      str_subset(my_species) %>% 
      str_subset(my_scenario) %>% 
-     # str_subset("AllData") %>% 
      stack()
    
    bin_raster_outname <- str_glue("{folder_path_dataviz}/Future_binary_sums_{my_species}_{my_scenario}.tif")
@@ -88,7 +87,6 @@ for (my_species in c("points_all", "points_atra", "points_prenjensis"))
       list.files(full.names = TRUE) %>% 
       str_subset(my_species) %>%
       str_subset(my_scenario) %>% 
-      # str_subset("AllData") %>% 
       stack()
     
     cont_r_outname <- str_glue("{folder_path_dataviz}/Future_cont_mean_{my_species}_{my_scenario}.tif")
@@ -113,7 +111,6 @@ for (my_species in c("points_all", "points_atra", "points_prenjensis"))
       list.files(full.names = TRUE) %>% 
       str_subset(my_species) %>% 
       str_subset("current") %>% 
-      # str_subset("AllData") %>% 
       stack()
     
     bin_raster_outname <- str_glue("{folder_path_dataviz}/Current_binary_sums_{my_species}.tif")
@@ -134,7 +131,6 @@ for (my_species in c("points_all", "points_atra", "points_prenjensis"))
     list.files(full.names = TRUE) %>% 
     str_subset(my_species) %>%
     str_subset("current") %>% 
-    # str_subset("AllData") %>% 
     stack()
   
   cont_r_outname <- str_glue("{folder_path_dataviz}/Current_cont_mean_{my_species}.tif")

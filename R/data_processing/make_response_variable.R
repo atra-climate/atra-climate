@@ -1,7 +1,7 @@
 ##########################################
 ####  Create response variable
 ##########################################
-#### | Project name: atra modeling
+#### | Project name: Atra climate
 #### | Script type: Data processing
 #### | What it does: Description
 #### | Creator: ---

@@ -1,7 +1,7 @@
 ##########################################
 ####  Calculate collinear variables
 ##########################################
-#### | Project name: Atra climate model
+#### | Project name: Atra climate
 #### | Script type: Data processing
 #### | What it does: Description
 #### | Date created: february 01, 2021.
@@ -122,7 +122,7 @@ species_data_df_fullnames_somequarter <- species_data_df_fullnames %>%
 # We selected five variables, namely, bio 4 (Temperature seasonality), bio 6
 # (minimum temperature of the coldest month), bio 7 (temperature annual range),
 # bio 13 (precipitation of the wettest month), bio 15 (precipitation
-# seasonality), and the topographic heterogeneity index.
+# seasonality)
 my_colinear_vars_noquarter <- vifstep(species_data_df_fullnames_noquarter, th = vif_th)
 my_colinear_vars_noquarter
 

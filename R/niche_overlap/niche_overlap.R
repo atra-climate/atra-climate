@@ -1,7 +1,7 @@
 ##########################################
 ####  Calculate niche overlap
 ##########################################
-#### | Project name: Atra modeling
+#### | Project name: Atra climate
 #### | Script type: Data processing
 #### | What it does: Description
 ##########################################

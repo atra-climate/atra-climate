@@ -1,7 +1,7 @@
 ##########################################
 ####  Create species map for Methods section
 ##########################################
-#### | Project name: Salamander modeling
+#### | Project name: Atra climate
 #### | Script type: Figure outputs
 #### | What it does: Loads data and creates map
 #### | Creator: -----
@@ -60,13 +60,14 @@ atra_thinned_sf <- atra_raw_sf %>%
   st_transform(crs = utm_33n) %>% 
   mutate(
     subspecies2 = case_when(
-      subspecies == "points_all" ~ "*Salamandra atra ssp.*",
+      subspecies == "points_all" ~ "*Salamandra atra* ssp.",
       subspecies == "points_atra" ~ "*Salamandra atra atra*",
       subspecies == "points_prenjensis" ~ "*Salamandra atra prenjensis*",
     ) %>% 
       as.factor() %>% 
-      fct_relevel(c("*Salamandra atra ssp.*", "*Salamandra atra atra*", "*Salamandra atra prenjensis*"))
+      fct_relevel(c("*Salamandra atra* ssp.", "*Salamandra atra atra*", "*Salamandra atra prenjensis*"))
   ) 
+
 
 
 
@@ -84,9 +85,6 @@ dinaric_countries <- here::here("results", "procext_countries.gpkg") %>%
   st_transform(crs = utm_33n)
 
 # Create map --------------------------------------------------------------
-
-
-
 # Subset species data for a better map
 
 atra_points_subspecies <- atra_thinned_sf %>% 
@@ -104,26 +102,17 @@ p_subsp <- ggplot() +
   new_scale_fill() +
   geom_sf(data = alpine_ranges, 
           aes(fill = range),
-          # fill = "#1b9e77", 
-          # color = "#1b9e77",
-          # show.legend = T,
           alpha = 0.4, size = 0.5) +
   scale_fill_manual(values = c("#d95f02", "#1b9e77")) +
   ########
-  new_scale_fill() +
-  # geom_sf(data = range_dinarides, fill = "#1b9e77", color = "#1b9e77", alpha = 0.4, size = 0.5) +
-  # geom_sf(data = range_alps, fill = "#d95f02", color = "#d95f02", alpha = 0.4, size = 0.5) +
+new_scale_fill() +
   geom_sf(data = atra_points_species, 
           aes(fill = subspecies2),
           alpha = 0.9,
-          # fill = NA,
-          # show.legend = TRUE,
           color = "grey10", shape = 21, size = 1.5, stroke = 0.75) +
-  # scale_fill_manual(values = c("#984ea3", "#EFC000FF", "blue")) +
   geom_sf(data = atra_points_subspecies, 
           aes(fill = subspecies2),
           alpha = 0.95,
-          # show.legend = TRUE,
           color = "grey10", shape = 21, size = 1.5, stroke = 0.75) +
   scale_fill_manual(values = c("#984ea3", "#EFC000FF", "grey98")) +
   guides(fill = guide_legend(override.aes = list(size = 5))) +
@@ -142,25 +131,27 @@ p_subsp <- ggplot() +
     panel.background = element_rect(fill = "transparent")
   ) +
   annotation_scale(text_cex = 1.25, 
-                   text_col = "grey20",
-                   line_col = "grey20",
+                   text_col = "grey40",
+                   line_col = "grey40",
                    location = "br",
                    style = "ticks",
                    height = unit(0.3, "cm"),
                    pad_x = unit(0.5, "cm"),
                    pad_y = unit(0.3, "cm"),
-                   line_width = 2) +
+                   line_width = 1.5) +
   coord_sf(
     xlim = c(st_bbox(atra_thinned_sf)[1] * 2.3,
              st_bbox(atra_thinned_sf)[3] * 1.05),
     ylim = c(st_bbox(atra_thinned_sf)[2] / 1.03,
-             st_bbox(atra_thinned_sf)[4] * 1.012))
+             st_bbox(atra_thinned_sf)[4] * 1.012)) +
+  annotation_north_arrow(which_north = "true", style = north_arrow_minimal(fill = "grey40", line_col = "grey40"), location = "tl", pad_x = unit(0.1, "cm"))
 
-# p_subsp
+
+
+p_subsp
 ## Set filename for the output filemap
 map_outname <- str_glue("{folder_path_figures}/methods_species_map_{Rahat::today()}_{format(Sys.time(), paste0('%H-%M-%S'))}.png")
 
 ## Final file version for submission stored in 600 dpi's
 ggsave(map_outname, p_subsp,
-       dpi = 300, height = 7, width = 12)  
-
+       dpi = 600, height = 7, width = 12)  

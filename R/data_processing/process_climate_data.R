@@ -1,7 +1,7 @@
 ##########################################
 ####  Get climate predictors
 ##########################################
-#### | Project name: My research project
+#### | Project name: Atra climate
 #### | Script type: Data processing
 #### | What it does: Description
 #### | Creator: ---
@@ -184,8 +184,7 @@ for (ii in seq_along(scenarios_list_future))
       ) %>% 
       pull(varname)
     
-    # selected_vars <- c(3, 5, 6, 8, 9, 13, 14, 15)
-    
+
     for (i in 1:19)
     {
       
@@ -250,7 +249,7 @@ for (ii in seq_along(scenarios_list_future))
                       options = "COMPRESS=LZW")
           
         } else {
-          print("Exception!!!!!!!!!!!!!!!!!!!!")
+          print("Exception!")
         }
       }
     }
@@ -292,7 +291,7 @@ my_past_rasterstack <- past_climate_vars_df %>%
   pull(full_path) %>% 
   raster::stack()
 
-selected_vars <- c(3, 5, 6, 8, 9, 13, 14, 15)
+selected_vars <- var_variables_vif
 
 climate_past_vif <- subset(my_past_rasterstack, selected_vars)
 
@@ -332,7 +331,7 @@ my_future_rasterstack <- future_climate_vars_df %>%
 my_future_rasterstack[my_future_rasterstack == -32768] <- NA
 
 
-selected_vars <- c(3, 5, 6, 8, 9, 13, 14, 15)
+selected_vars <- var_variables_vif
 
 climate_future_vif <- subset(my_future_rasterstack, selected_vars)
 

@@ -1,5 +1,3 @@
-
-
 pacman::p_load(Rahat, tidyverse, here, tictoc, janitor, sf, raster, matrixStats)
 
 library(ggthemes)
@@ -11,7 +9,7 @@ library(ggtext)
 
 source(here::here("R", "main_setup.R"))
 
-source(here("R", "functions", "bivariate_map_functions.R"))
+source(here("R", "functions", "map_functions.R"))
 ####
 
 utm_33n <- "+proj=utm +zone=33 +ellps=WGS84 +datum=WGS84 +units=m +no_defs"

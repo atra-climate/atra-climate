@@ -9,9 +9,9 @@
 ##########################################
 ####  Fit climate models with biomod2
 ##########################################
-#### | Project name: Atra model
+#### | Project name: Atra climate
 #### | Script type: Data processing
-#### | What it does: Description
+#### | What it does: Runs script on SLURM cluster to fit distribution models
 ##########################################
 
 # Load packages -----------------------------------------------------------
@@ -46,9 +46,10 @@ source(here("R", "functions", "model_functions.R"))
 # Load climate data -------------------------------------------------------
 
 climate_current_vif <- var_current_rasterstack
+
 #### Load species data ####
 atra_raw_sf <- st_read(var_path_species_data)
-# 
+
 # Adjust for modeling -----------------------------------------------------
 atra_data_sf_clean <- atra_raw_sf %>%
   filter(subspecies == var_taxon_name) %>%
@@ -155,7 +156,6 @@ ensemble_model_out <- BIOMOD_EnsembleModeling(modeling.output = myBiomodModelOut
                                               prob.mean.weight = TRUE, #weight by TSS, Luca had T
                                               prob.cv = FALSE,
                                               prob.ci = FALSE,
-                                              # prob.ci.alpha = 0.05,
                                               prob.median = FALSE,
                                               prob.mean.weight.decay = "proportional")
 
@@ -235,7 +235,7 @@ ensemble_model_projection <- BIOMOD_EnsembleForecasting(projection.output = mode
                                                         do.stack = FALSE,
                                                         binary.meth = "TSS")
 
-# 8*5
+
 prediction_current_ensemble <- get_predictions(ensemble_model_projection)
 
 for (i_pred in 1:nlayers(prediction_current_ensemble))
