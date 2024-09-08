@@ -1,10 +1,10 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# A multi-modeling approach for informing the conservation of a cold-adapted amphibian in the face of climate change
+# A Multi-Modelling Approach for Informing the Conservation of a Cold-Adapted Terrestrial Amphibian in the Face of Climate Change
 
 This repository contains the code used for the study on the climate
-impacts on the Alpine salamander.
+impacts on the Alpine salamander. You can access the publication [here](https://doi.org/10.1111/jbi.15005).
 
 ## Project Structure
 
@@ -48,11 +48,9 @@ climate website](https://chelsa-climate.org/). Species occurrence data
 you can retrieve from [digital supporting
 information](https://atra-climate.shinyapps.io/atra-climate/).
 
-## Contact and citation
+## Contact
 
 For any additional questions or requests, please contact the
 corresponding author at <m.cengic@science.ru.nl>.
 
-Please cite this article as follows:
 
-*To be added after peer review*
